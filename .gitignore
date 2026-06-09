@@ -1,0 +1,16 @@
+# Local machine config (paths, personal settings)
+.claude.local.md
+
+# Build outputs
+build/
+.xmake/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+
+# OS
+Thumbs.db
+Desktop.ini
