@@ -23,7 +23,7 @@ This is **not** a simple spawner mod. It is a brain that *uses* the existing gam
 - **Target game version:** latest Steam Starfield supported by current SFSE (verify each session)
 - **Platform target:** PC, Steam only (Gamepass/MS Store/EGS not supported by SFSE)
 - **Authors:** DJLegends (+ AI agents: Claude Code)
-- **License:** [TBD — note that linking against CommonLibSF means GPL-3.0-or-later WITH Modding Exception. Choose accordingly.]
+- **License:** GPL-3.0 WITH Modding Exception (`LICENSE` + `EXCEPTIONS`, decided 2026-06-10 — effectively required by CommonLibSF linkage)
 - **Repo state:** scaffolded and load-tested (2026-06-10) — `Director.dll` v0.0.1 builds via XMake + VS 2026 MSVC, loads via SFSE on game 1.16.242, receives all four SFSE runtime messages (see `docs/superpowers/specs/2026-06-09-sfse-hello-world-design.md` Test Results). CommonLibSF pinned as submodule at `lib/commonlibsf` (`12d665b5`, nested `commonlib-shared` at `af93af74`) — clone with `--recurse-submodules`. Machine-specific paths (game, MO2, deploy target) live in `.claude.local.md` (gitignored).
 - **AGENTS.md:** byte-identical copy of this file for non-Claude tooling. Edit `CLAUDE.md` first, then sync: `Copy-Item CLAUDE.md AGENTS.md`. Never edit AGENTS.md directly.
 
