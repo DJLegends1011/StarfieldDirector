@@ -72,6 +72,16 @@ Safe-zone API only — no engine struct definitions touched:
 
 Out of scope for this test: any engine hook, any engine struct access, Papyrus, CK content. Anything broken discovered in CommonLibSF gets documented in `/docs/re-notes/` with date + game version per CLAUDE.md.
 
+## Test Results (2026-06-10)
+
+**PASS — all three criteria.** Game v1.16.242.0, SFSE 1.16.242, launched via MO2 (profile "CK"), CommonLibSF pinned `12d665b5`, VS 2026 MSVC build. No crash.
+
+1. ✅ `Director.log` created; banner `Director v0.0.1 loaded` + `message listener registered`.
+2. ✅ All four runtime messages received: `kPostLoad`, `kPostPostLoad` (main menu), `kPostDataLoad`, `kPostPostDataLoad` (save load).
+3. ✅ `sfse.txt`: `plugin Director.dll (00000001 Director 00000010) loaded correctly (handle 6)`; zero errors. (Note: SFSE's own log is `sfse.txt` on this install, not `sfse.log`.)
+
+**RE finding:** SFSE messages arrive on different threads — load-phase messages on thread 108572, DataLoad-phase on thread 319060. Director event intake must be thread-safe (use guards/queues; see CLAUDE.md constraint about not blocking hooks).
+
 ## Aftermath
 
 1. Update CLAUDE.md: repo-state line (no longer docs-only), replace aspirational build commands with the real ones, record the pinned CommonLibSF commit.
