@@ -5,7 +5,11 @@ param(
     [string]$Mode = "releasedbg"
 )
 
+$ErrorActionPreference = 'Stop'
+
+# $PSScriptRoot is scripts\; repo root is one level up
 $repo = Split-Path -Parent $PSScriptRoot
+if (-not $repo) { throw "Cannot determine repo root (was the script dot-sourced?)" }
 $deployDir = "D:\SFMO2\mods\Starfield Director\SFSE\Plugins"
 $dll = Join-Path $repo "build\windows\x64\$Mode\Director.dll"
 
