@@ -18,7 +18,7 @@ target("Director")
         name = "Director",
         author = "DJLegends",
         description = "AI Director for Starfield",
-        email = "dkidd799@gmail.com"
+        contact = "dkidd799@gmail.com"
     })
 
     -- add src files
