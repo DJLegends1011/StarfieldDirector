@@ -25,6 +25,7 @@ This is **not** a simple spawner mod. It is a brain that *uses* the existing gam
 - **Authors:** DJLegends (+ AI agents: Claude Code)
 - **License:** GPL-3.0 WITH Modding Exception (`LICENSE` + `EXCEPTIONS`, decided 2026-06-10 — effectively required by CommonLibSF linkage)
 - **Repo state:** scaffolded and load-tested (2026-06-10) — `Director.dll` v0.0.1 builds via XMake + VS 2026 MSVC, loads via SFSE on game 1.16.242, receives all four SFSE runtime messages (see `docs/superpowers/specs/2026-06-09-sfse-hello-world-design.md` Test Results). CommonLibSF pinned as submodule at `lib/commonlibsf` (`12d665b5`, nested `commonlib-shared` at `af93af74`) — clone with `--recurse-submodules`. Machine-specific paths (game, MO2, deploy target) live in `.claude.local.md` (gitignored).
+- **Remote:** `github.com/DJLegends1011/StarfieldDirector` (default branch `main`; old prototype history was force-replaced 2026-06-10)
 - **AGENTS.md:** byte-identical copy of this file for non-Claude tooling. Edit `CLAUDE.md` first, then sync: `Copy-Item CLAUDE.md AGENTS.md`. Never edit AGENTS.md directly.
 
 ---
@@ -282,6 +283,17 @@ Use `CreationKit/Tools/Papyrus Compiler/PapyrusCompiler.exe` against `/papyrus/*
 
 ---
 
+## Next Up (working to-do list)
+
+In rough priority order; check off and date items as they land:
+
+- [ ] **TensionModel + PhaseMachine skeleton** — pure C++ state (scalar tension, 4-phase machine with hysteresis), no engine structs touched, unit-testable off-game. Minefield-free; the natural next milestone.
+- [ ] **Thread-safe event intake** — queue SFSE/engine events into the director tick (messages arrive on multiple threads, verified 2026-06-10).
+- [ ] **README.md** — repo is public now; user-facing readme doesn't exist yet.
+- [ ] **First engine hook (combat state)** — first minefield contact; verify against live headers before trusting any RE/ definition, findings go to `/docs/re-notes/`.
+- [ ] **SQ_Alarm equivalent RE** — prerequisite for the flanking distributor (the crown jewel); see RE backlog below.
+- [ ] Decide: keep `/papyrus` + `/ck` layers for the bridge or defer until the brain is further along.
+
 ## Known Unknowns / RE Backlog
 
 Things we need to verify or document before they bite us:
@@ -355,3 +367,4 @@ If you are an AI agent picking up this codebase:
 - `[YYYY-MM-DD]` Initial CLAUDE.md draft. Architecture sketch, subsystem outline, RE backlog established.
 - `[2026-06-09]` Audit pass: documented actual repo state (docs-only, pre-scaffold, no git yet), established AGENTS.md as a synced byte-copy of CLAUDE.md, flagged XMake-vs-CMake as the blocking decision for scaffolding.
 - `[2026-06-10]` Hello-world milestone: XMake scaffold + CommonLibSF submodule, `Director.dll` v0.0.1 built (VS 2026), loaded via SFSE on 1.16.242, all four runtime messages received. Real build/deploy commands recorded; multithreaded-message RE finding noted in conventions.
+- `[2026-06-10]` License decided (GPL-3.0 WITH Modding Exception, salvaged from prototype repo). GitHub remote wired up (`DJLegends1011/StarfieldDirector`, history replaced). Added "Next Up" to-do section.
