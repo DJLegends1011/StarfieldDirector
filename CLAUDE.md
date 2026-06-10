@@ -22,7 +22,7 @@ This is **not** a simple spawner mod. It is a brain that *uses* the existing gam
 - **Phase:** scoping / architecture
 - **Target game version:** latest Steam Starfield supported by current SFSE (verify each session)
 - **Platform target:** PC, Steam only (Gamepass/MS Store/EGS not supported by SFSE)
-- **Authors:** [fill in]
+- **Authors:** DJLegends (+ AI agents: Claude Code)
 - **License:** [TBD — note that linking against CommonLibSF means GPL-3.0-or-later WITH Modding Exception. Choose accordingly.]
 - **Repo state:** scaffolded and load-tested (2026-06-10) — `Director.dll` v0.0.1 builds via XMake + VS 2026 MSVC, loads via SFSE on game 1.16.242, receives all four SFSE runtime messages (see `docs/superpowers/specs/2026-06-09-sfse-hello-world-design.md` Test Results). CommonLibSF pinned as submodule at `lib/commonlibsf` (`12d665b5`, nested `commonlib-shared` at `af93af74`) — clone with `--recurse-submodules`. Machine-specific paths (game, MO2, deploy target) live in `.claude.local.md` (gitignored).
 - **AGENTS.md:** byte-identical copy of this file for non-Claude tooling. Edit `CLAUDE.md` first, then sync: `Copy-Item CLAUDE.md AGENTS.md`. Never edit AGENTS.md directly.
@@ -263,7 +263,7 @@ Use `CreationKit/Tools/Papyrus Compiler/PapyrusCompiler.exe` against `/papyrus/*
 ### C++ side
 - Namespace everything under `Director::`
 - Subsystem files own their state; communicate via a `DirectorContext` singleton (not the prettiest, but matches the SFSE plugin pattern)
-- Logging: use spdlog via CommonLibSF's logger setup; channel name `"Director"`
+- Logging: use `REX::INFO/WARN/ERROR` (CommonLibSF's current logging API; log file is `<plugin>.log` in the SFSE Logs dir, initialized by `SFSE::Init`)
 - Never allocate in tight hot paths (per-tick update loops); pool actor pointers
 - SFSE message callbacks arrive on multiple threads (verified 2026-06-10: load-phase vs data-load-phase used different thread IDs) — event intake must be thread-safe
 - Address Library IDs in a single `Offsets.h` with comments referencing the game version they were captured against

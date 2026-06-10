@@ -2,7 +2,9 @@
 # Usage: .\scripts\deploy.ps1 [-Mode releasedbg|debug]
 param(
     [ValidateSet("releasedbg", "debug")]
-    [string]$Mode = "releasedbg"
+    [string]$Mode = "releasedbg",
+    # Deploy target precedence: -DeployDir param > DIRECTOR_DEPLOY_DIR env var > local-rig default
+    [string]$DeployDir = $env:DIRECTOR_DEPLOY_DIR
 )
 
 $ErrorActionPreference = 'Stop'
@@ -10,7 +12,8 @@ $ErrorActionPreference = 'Stop'
 # $PSScriptRoot is scripts\; repo root is one level up
 $repo = Split-Path -Parent $PSScriptRoot
 if (-not $repo) { throw "Cannot determine repo root (was the script dot-sourced?)" }
-$deployDir = "D:\SFMO2\mods\Starfield Director\SFSE\Plugins"
+if (-not $DeployDir) { $DeployDir = "D:\SFMO2\mods\Starfield Director\SFSE\Plugins" }
+$deployDir = $DeployDir
 $dll = Join-Path $repo "build\windows\x64\$Mode\Director.dll"
 
 Set-Location $repo
